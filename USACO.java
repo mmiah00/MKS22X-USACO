@@ -7,22 +7,6 @@ public class USACO {
     return 1;
   }
 
-  private class makeLake {
-    private int elevation;
-    private int numInstructions;
-    private int[][] pasture;
-
-    public makeLake (int r, int c, int e, int n) {
-      pasture = new int [r][c];
-      elevation = e;
-      numInstructions = n;
-    }
-
-
-  }
-
-  public static int silver(String filename) {
-    return 1;
   }
 
   private ArrayList <String> readFile  (String filename) {
@@ -31,6 +15,10 @@ public class USACO {
       String line = inf.nextLine ();
     }
     return new ArrayList <String> ();
+  }
+
+  public static int silver(String filename) {
+    return 1;
   }
 
 }

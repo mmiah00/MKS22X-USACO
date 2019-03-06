@@ -10,7 +10,7 @@ public class MakeLake {
     pasture = new int [r][c];
     elevation = e;
     numInstructions = n;
-    makePasture (f); 
+    makePasture (f);
   }
 
   private void makePasture (String filename) {
@@ -28,4 +28,10 @@ public class MakeLake {
       i ++;
     }
   }
+
+  public static void main (String[] args) {
+    MakeLake test = new MakeLake (makelake.in, 4,6,22, 2); 
+
+  }
+
 }
