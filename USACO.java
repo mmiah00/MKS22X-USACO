@@ -2,7 +2,6 @@ import java.util.*;
 import java.io.*;
 
 public class USACO {
-
   public static int bronze(String filename){
     return 1;
   }
@@ -14,11 +13,11 @@ public class USACO {
     n[1] = inf.nextInt ();
     n[2] = inf.nextInt ();
     n[3] = inf.nextInt ();
-    inf.close (); 
+    inf.close ();
     return n;
   }
 
-  private ArrayList<String> readFile  (String filename) {
+  private ArrayList<String> readFile (String filename) {
     Scanner inf = new Scanner (filename);
     while (inf.hasNextLine ()) {
       String line = inf.nextLine ();
@@ -40,5 +39,4 @@ public class USACO {
   public static void main (String[] args) {
     toString (instructions ("makelake.in"));
   }
-
 }
