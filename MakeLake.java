@@ -15,7 +15,7 @@ public class MakeLake {
 
   private void makePasture (String filename) {
     Scanner inf = new Scanner (filename);
-    int i = 0;
+    int i = 0; //lines in file
     int x = 0; // pasture rows
     while (inf.hasNextLine ()) {
       if (i != 0) {
@@ -29,8 +29,22 @@ public class MakeLake {
     }
   }
 
+  public String toString () {
+    String ans = "";
+    for (int r = 0; r < pasture.length; r ++) {
+      for (int c = 0; c < pasture[r].length; c ++) {
+        ans += pasture [r][c];
+        if (c == pasture[r].length - 1)  {
+          ans += "\n";
+        }
+      }
+    }
+    return ans;
+  }
+
   public static void main (String[] args) {
-    MakeLake test = new MakeLake (makelake.in, 4,6,22, 2); 
+    MakeLake test = new MakeLake ("makelake.in", 4,6,22, 2);
+    test.toString ();
 
   }
 
