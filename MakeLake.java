@@ -59,7 +59,6 @@ public class MakeLake {
         int x = largest.get(i)[1];
         pasture[y][x] -= 1; //subtracting one from each square
       }
-      //go through board to find highest
       numTimes --;
       System.out.println (toString ());
     }
@@ -73,6 +72,7 @@ public class MakeLake {
         int[] a = {y,x};
         if (pasture [y][x] > highest) {
           highest = pasture[y][x];
+          coordinates = new ArrayList <int[]> ();
           coordinates.add (a);
         }
         if (pasture [y][x] == highest) {
