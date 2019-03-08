@@ -16,7 +16,7 @@ public class MakeLake {
     String ans = "";
     for (int r = 0; r < pasture.length; r ++) {
       for (int c = 0; c < pasture[r].length; c ++) {
-        ans += pasture [r][c];
+        ans += pasture [r][c]+ " ";
         if (c == pasture[r].length - 1)  {
           ans += "\n";
         }
@@ -36,13 +36,20 @@ public class MakeLake {
     if (r + 1 > pasture.length || r - 1 < 0 || c + 1 > pasture [r].length || c - 1 < 0) {
       return false; //if cannot fit in 3x3 box
     }
-
     while (numTimes > 0) {
+      /*
       for (int y = r - 1; y <= r + 1; y ++) {
         for (int x = c - 1; x <= c + 1; x ++) {
-          int[] highest = highest (y,x);
+          ArrayList <int[]> highest = highest (y,x);
           pasture [highest[0]][highest[1]] -= 1;
         }
+      }
+      */
+      ArrayList <int[]> largest = highest (r,c);
+      for (int i = 0; i < largest.size (); i ++) {
+        int y = largest.get(i)[0];
+        int x = largest.get(i)[1];
+        pasture[y][x] -= 1;
       }
       //go through board to find highest
       numTimes --;
@@ -50,15 +57,18 @@ public class MakeLake {
     return true;
   }
 
-  private int[] highest (int r, int c) { //returns an array of the coordinates of the highest in a 3x3 grid
+  private ArrayList <int[]> highest (int r, int c) { //returns an arrayList of the coordinates of each square with the highest in a  3x3 grid
     int highest = 0;
-    int[] coordinates = new int[2];
+    ArrayList <int[]> coordinates = new ArrayList <int[]> ();
     for (int y = r - 1; y <= r + 1; y ++) {
       for (int x = c - 1; x <= c + 1; x ++) {
+        int[] a = {y,x};
         if (pasture [y][x] > highest) {
           highest = pasture[y][x];
-          coordinates[0] = y;
-          coordinates[1] = x;
+          coordinates.add (a);
+        }
+        if (pasture [y][x] == highest) {
+          coordinates.add (a);
         }
       }
     }
@@ -70,7 +80,20 @@ public class MakeLake {
       int [] stomps = instructions.get (i);
       stomp (stomps[0], stomps[1], stomps [2]);
     }
-    return pasture; 
+    for (int i = 0; i < pasture.length; i ++) {
+      for (int y = 0; y < pasture[i].length; y ++) {
+        int depth = pasture [i][y];
+        /*
+        if (depth - elevation <= 0) {
+          pasture [i][y] = 0;
+        }
+        else {
+          pasture [i][y] -= elevation;
+        }
+        */
+      }
+    }
+    return pasture;
   }
 
 

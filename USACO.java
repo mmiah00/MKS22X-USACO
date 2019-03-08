@@ -73,6 +73,7 @@ public class USACO {
     return pasture;
   }
 
+  /************************************************************************************************************************/
   public static int silver(String filename) {
     return 1;
   }
@@ -107,7 +108,8 @@ public class USACO {
       */
       //System.out.println (toString (pasture ("makelake.1.in")));
       MakeLake a = new MakeLake (pasture ("makelake.in"), sizes("makelake.in")[2], instructions ("makelake.in"));
-      System.out.println (a.execute ().toString ());
+      a.stomp (instructions ("makelake.in").get (0)[0], instructions ("makelake.in").get (0)[1], instructions ("makelake.in").get (0)[2]);
+      System.out.println (a.toString ());
       //toString (sizes ("makelake.in"));
     }
     catch (FileNotFoundException e) {
