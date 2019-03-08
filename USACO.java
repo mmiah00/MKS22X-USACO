@@ -4,7 +4,11 @@ import java.util.Scanner;
 
 public class USACO {
   public static int bronze(String filename){
-    //MakeLake a = new MakeLake (pasture (filename), sizes(filename)[2], instructions (filename));
+    /*
+    MakeLake a = new MakeLake (pasture (filename), sizes(filename)[2], instructions (filename));
+    pasture = a.execute ();
+    //them sum the numbers and multiply by 72 * 72
+    */
     return 1;
   }
 
