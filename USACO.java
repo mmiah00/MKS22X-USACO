@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class USACO {
   public static int bronze(String filename){
+    //MakeLake a = new MakeLake (pasture (filename), sizes(filename)[2], instructions (filename));
     return 1;
   }
 
@@ -54,7 +55,7 @@ public class USACO {
       field.add (lines.get (i));
     }
 
-    int index = 0; //keeps track of index of pasture 
+    int index = 0; //keeps track of index of pasture
     for (int i = 0; i < field.size (); i ++) {
       String line = field.get (i);
       String[] depths = line.split (" "); //splits the string into the numbers
@@ -100,7 +101,9 @@ public class USACO {
         toString (instructions ("makelake.in").get (i));
       }
       */
-      System.out.println (toString (pasture ("makelake.1.in")));
+      //System.out.println (toString (pasture ("makelake.1.in")));
+      MakeLake a = new MakeLake (pasture ("makelake.in"), sizes("makelake.in")[2], instructions ("makelake.in"));
+      System.out.println (a.execute ().toString ());
       //toString (sizes ("makelake.in"));
     }
     catch (FileNotFoundException e) {

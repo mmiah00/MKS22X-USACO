@@ -3,30 +3,13 @@ import java.io.*;
 
 public class MakeLake {
   private int elevation;
-  private int numInstructions;
+  private ArrayList<int []> instructions;
   private int[][] pasture;
 
-  public MakeLake (String f, int r, int c, int e, int n) {
-    pasture = new int [r][c];
+  public MakeLake (int[][] p, int e, ArrayList <int[]> i) {
+    pasture = p;
     elevation = e;
-    numInstructions = n;
-    makePasture (f);
-  }
-
-  private void makePasture (String filename) {
-    Scanner inf = new Scanner (filename);
-    int i = 0;
-    int x = 0; // pasture rows
-    while (inf.hasNextLine ()) {
-      if (i != 0) {
-        String line = inf.nextLine ();
-        for (int y = 0; y < line.length(); y ++) {
-          pasture [x][y] = (int) line.charAt (y);
-        }
-        x ++;
-      }
-      i ++;
-    }
+    instructions = i;
   }
 
   public String toString () {
@@ -43,15 +26,10 @@ public class MakeLake {
   }
 
   public static void main (String[] args) {
+    /*
     MakeLake test = new MakeLake ("makelake.in", 4,6,22, 2);
-    test.toString ();
-
-}
-
-  public void readFile (String filename ) {
-    Scanner inf = new Scanner (filename);
-    String line = inf.nextLine ();
-    System.out.println (line);
+    System.out.println (test.toString ());
+    */
   }
 
   public boolean stomp (int r, int c, int numTimes) {
@@ -85,6 +63,14 @@ public class MakeLake {
       }
     }
     return coordinates;
+  }
+
+  public int[][] execute () { //does all the instructions and returns pasture
+    for (int i = 0; i < instructions.size (); i ++) {
+      int [] stomps = instructions.get (i);
+      stomp (stomps[0], stomps[1], stomps [2]);
+    }
+    return pasture; 
   }
 
 
