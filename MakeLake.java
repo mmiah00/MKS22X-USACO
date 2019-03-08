@@ -32,29 +32,37 @@ public class MakeLake {
     */
   }
 
+  /*
   public boolean stomp (int r, int c, int numTimes) {
     if (r + 1 > pasture.length || r - 1 < 0 || c + 1 > pasture [r].length || c - 1 < 0) {
       return false; //if cannot fit in 3x3 box
     }
     while (numTimes > 0) {
-      /*
-      for (int y = r - 1; y <= r + 1; y ++) {
-        for (int x = c - 1; x <= c + 1; x ++) {
-          ArrayList <int[]> highest = highest (y,x);
-          pasture [highest[0]][highest[1]] -= 1;
-        }
-      }
-      */
-      ArrayList <int[]> largest = highest (r,c);
+      ArrayList <int[]> largest = highest (r,c); //arrayList of coordinates for the squares with the highest value
       for (int i = 0; i < largest.size (); i ++) {
         int y = largest.get(i)[0];
         int x = largest.get(i)[1];
-        pasture[y][x] -= 1;
+        pasture[y][x] -= 1; //subtracting one from each square
       }
       //go through board to find highest
       numTimes --;
     }
     return true;
+  }
+  */
+
+  public void stomp (int r, int c, int numTimes) {
+    while (numTimes > 0) {
+      ArrayList <int[]> largest = highest (r,c); //arrayList of coordinates for the squares with the highest value
+      for (int i = 0; i < largest.size (); i ++) {
+        int y = largest.get(i)[0];
+        int x = largest.get(i)[1];
+        pasture[y][x] -= 1; //subtracting one from each square
+      }
+      //go through board to find highest
+      numTimes --;
+      System.out.println (toString ());
+    }
   }
 
   private ArrayList <int[]> highest (int r, int c) { //returns an arrayList of the coordinates of each square with the highest in a  3x3 grid
