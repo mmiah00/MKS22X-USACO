@@ -46,6 +46,28 @@ public class USACO {
     return instructions;
   }
 
+  private static int[][] pasture (String filename) throws FileNotFoundException {
+    int [][] pasture = new int [sizes(filename)[0]] [sizes (filename)[1]];
+    ArrayList <String> lines = readFile (filename);
+    ArrayList <String> field = new ArrayList <String> (); // only the lines with the depths
+    for (int i = 1; i <= sizes (filename)[0]; i ++) {
+      field.add (lines.get (i));
+    }
+
+    int index = 0; //keeps track of index of pasture 
+    for (int i = 0; i < field.size (); i ++) {
+      String line = field.get (i);
+      String[] depths = line.split (" "); //splits the string into the numbers
+      int [] row = new int [sizes(filename)[1]]; //makes a int[] size c
+      for (int x = 0; x < row.length; x ++) {
+        row [x] = Integer.parseInt (depths[x]); //parses through each string to make them into ints
+      }
+      pasture[index] = row; //add this row to pasture
+      index ++;
+    }
+    return pasture;
+  }
+
   public static int silver(String filename) {
     return 1;
   }
@@ -57,12 +79,28 @@ public class USACO {
     }
   }
 
+  private static String toString (int[][] s) {
+    String ans = "";
+    for (int y = 0; y < s.length; y ++) {
+      for (int x = 0; x < s[y].length; x ++) {
+        ans += s[y][x] + " ";
+        if (x == s[y].length - 1)  {
+          ans += "\n";
+        }
+      }
+    }
+    return ans;
+  }
+
   public static void main (String[] args) {
     //toString (instructions ("makelake.in"));
     try {
+      /*
       for (int i = 0; i < instructions ("makelake.in").size(); i ++) {
         toString (instructions ("makelake.in").get (i));
       }
+      */
+      System.out.println (toString (pasture ("makelake.1.in")));
       //toString (sizes ("makelake.in"));
     }
     catch (FileNotFoundException e) {
