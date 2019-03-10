@@ -4,12 +4,15 @@ import java.util.Scanner;
 
 public class USACO {
   public static int bronze(String filename){
-    /*
-    MakeLake a = new MakeLake (pasture (filename), sizes(filename)[2], instructions (filename));
-    pasture = a.execute ();
+    try {
+      int[][] field;
+      MakeLake a = new MakeLake (pasture (filename), sizes(filename)[2], instructions (filename));
+      field = a.execute ();
+      return sum (field) * 72 * 72;
+    } catch (FileNotFoundException e) {
+      return -1;
+    }
     //them sum the numbers and multiply by 72 * 72
-    */
-    return 1;
   }
 
   private static ArrayList<String> readFile (String filename) throws FileNotFoundException { //creates an arrayList of all the lines in the file
@@ -73,6 +76,16 @@ public class USACO {
     return pasture;
   }
 
+  private static int sum (int[][] depths) {
+    int ans = 0;
+    for (int y = 0; y < depths.length; y ++) {
+      for (int x = 0; x < depths[y].length; x ++) {
+        ans += depths [y][x];
+      }
+    }
+    return ans;
+  }
+
   /************************************************************************************************************************/
   public static int silver(String filename) {
     return 1;
@@ -108,8 +121,9 @@ public class USACO {
       */
       //System.out.println (toString (pasture ("makelake.1.in")));
       MakeLake a = new MakeLake (pasture ("makelake.in"), sizes("makelake.in")[2], instructions ("makelake.in"));
+      System.out.println (sum (a.execute ())); 
       //a.highest (instructions ("makelake.in").get (0)[0], instructions ("makelake.in").get (0)[1]);
-      a.stomp (instructions ("makelake.in").get (1)[0], instructions ("makelake.in").get (1)[1], instructions ("makelake.in").get (1)[2]);
+      //a.stomp (instructions ("makelake.in").get (1)[0], instructions ("makelake.in").get (1)[1], instructions ("makelake.in").get (1)[2]);
       //System.out.println (a.toString ());
       //toString (sizes ("makelake.in"));
     }
