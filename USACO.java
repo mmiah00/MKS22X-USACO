@@ -108,7 +108,8 @@ public class USACO {
       */
       //System.out.println (toString (pasture ("makelake.1.in")));
       MakeLake a = new MakeLake (pasture ("makelake.in"), sizes("makelake.in")[2], instructions ("makelake.in"));
-      a.stomp (instructions ("makelake.in").get (0)[0], instructions ("makelake.in").get (0)[1], instructions ("makelake.in").get (0)[2]);
+      //a.highest (instructions ("makelake.in").get (0)[0], instructions ("makelake.in").get (0)[1]);
+      a.stomp (instructions ("makelake.in").get (1)[0], instructions ("makelake.in").get (1)[1], instructions ("makelake.in").get (1)[2]);
       //System.out.println (a.toString ());
       //toString (sizes ("makelake.in"));
     }
