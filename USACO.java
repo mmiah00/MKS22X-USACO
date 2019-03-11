@@ -91,11 +91,70 @@ public class USACO {
     return 1;
   }
 
-  private static void toString (int [] s) {
+  private static int[] nmt (String filename) throws FileNotFoundException {
+    ArrayList <String> file = readFile (filename);
+    String firstLine = file.get (0);
+    String [] nums = firstLine.split (" ");
+    int []  sizes = new int [3];
+    for (int i = 0; i < 3; i ++) {
+      sizes[i] = Integer.parseInt (nums[i]);
+    }
+    return sizes;
+  }
+
+  private static char [][] field (String filename) throws FileNotFoundException {
+    char [][] pasture = new char [nmt (filename)[0]] [nmt (filename)[1]];
+    ArrayList <String> lines = readFile (filename);
+    ArrayList <String> field = new ArrayList <String> ();
+    for (int i = 1; i <= nmt (filename)[0]; i ++) {
+      field.add (lines.get (i));
+    }
+
+    int index = 0; //keeps track of index of pasture
+    for (int i = 0; i < field.size (); i ++) {
+      String line = field.get (i);
+      char[] row = new char [line.length()];
+      for (int x = 0; x < line.length (); x ++) {
+        row[x] = line.charAt (x);
+      }
+      pasture[index] = row; //add this row to pasture
+      index ++;
+    }
+    return pasture;
+  }
+
+  private static int[][] cowsCors (String filename) throws FileNotFoundException {
+    int[][] coordinates = new int[2][2];
+    ArrayList <String> lines = readFile (filename);
+    String lastLine = lines.get (lines.size () - 1);
+    String [] nums = lastLine.split (" ");
+    coordinates[0][0] = Integer.parseInt (nums[0]);
+    coordinates [0][1] = Integer.parseInt (nums[1]);
+    coordinates[1][0] = Integer.parseInt (nums[2]);
+    coordinates [1][1] = Integer.parseInt (nums[3]);
+    return coordinates;
+  }
+
+  private static int solve (String filename ) throws FileNotFoundException {
+    char [][] field = field (filename);
+    int [] start = cowsCors (filename)[0];
+    return help (filename, start[0], start[1], 0);
+  }
+
+  private static int help (String f, int y, int x, int solutions) throws FileNotFoundException{
+    int [] end = cowsCors (f) [1];
+    if (y == end[0] && x == end [1]) {
+      return 1;
+    }
+    return 0; 
+  }
+
+  private static String toString (int [] s) {
     String ans = "";
     for (int x = 0; x < s.length; x ++) {
-      System.out.println (s[x]);
+      ans += s[x] + " ";
     }
+    return ans;
   }
 
   private static String toString (int[][] s) {
@@ -111,21 +170,27 @@ public class USACO {
     return ans;
   }
 
+  private static String toString (char[][] s) {
+    String ans = "";
+    for (int y = 0; y < s.length; y ++) {
+      for (int x = 0; x < s[y].length; x ++) {
+        ans += s[y][x] + " ";
+        if (x == s[y].length - 1)  {
+          ans += "\n";
+        }
+      }
+    }
+    return ans;
+  }
+
   public static void main (String[] args) {
     //toString (instructions ("makelake.in"));
     try {
-      /*
-      for (int i = 0; i < instructions ("makelake.in").size(); i ++) {
-        toString (instructions ("makelake.in").get (i));
-      }
-      */
-      //System.out.println (toString (pasture ("makelake.1.in")));
-      MakeLake a = new MakeLake (pasture ("makelake.in"), sizes("makelake.in")[2], instructions ("makelake.in"));
-      System.out.println (sum (a.execute ())); 
-      //a.highest (instructions ("makelake.in").get (0)[0], instructions ("makelake.in").get (0)[1]);
-      //a.stomp (instructions ("makelake.in").get (1)[0], instructions ("makelake.in").get (1)[1], instructions ("makelake.in").get (1)[2]);
-      //System.out.println (a.toString ());
-      //toString (sizes ("makelake.in"));
+      //MakeLake a = new MakeLake (pasture ("makelake.in"), sizes("makelake.in")[2], instructions ("makelake.in"));
+      //System.out.println (sum (a.execute ()));
+      System.out.println (toString (nmt ("ctravel.1.in")));
+      System.out.println (toString (field ("ctravel.1.in")));
+      System.out.println (toString (cowsCors ("ctravel.1.in")));
     }
     catch (FileNotFoundException e) {
       System.out.println ("file not found");
