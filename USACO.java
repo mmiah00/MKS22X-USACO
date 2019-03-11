@@ -88,7 +88,11 @@ public class USACO {
 
   /************************************************************************************************************************/
   public static int silver(String filename) {
-    return 1;
+    try {
+      return solve (filename);
+    }catch (FileNotFoundException e) {
+      return -1;
+    }
   }
 
   private static int[] nmt (String filename) throws FileNotFoundException {
@@ -138,15 +142,43 @@ public class USACO {
   private static int solve (String filename ) throws FileNotFoundException {
     char [][] field = field (filename);
     int [] start = cowsCors (filename)[0];
-    return help (filename, start[0], start[1], 0);
+    int steps = nmt (filename)[2];
+    return help (filename, field, start[0], start[1], steps);
   }
 
-  private static int help (String f, int y, int x, int solutions) throws FileNotFoundException{
+  private static int help (String f, char [][] pasture, int y, int x, int steps) throws FileNotFoundException{
     int [] end = cowsCors (f) [1];
-    if (y == end[0] && x == end [1]) {
+    int ans = 0;
+    if (steps == 0 && y == end[0] && x == end [1]) {
       return 1;
     }
-    return 0; 
+    else {
+      if (onBoard (pasture, y + 1, x)) {
+        if (pasture[y + 1][x] != '*') {
+          ans += help (f, pasture, y + 1, x, steps - 1);
+        }
+      }
+      if (onBoard (pasture, y - 1, x)) {
+        if (pasture[y - 1][x] != '*') {
+          ans += help (f, pasture, y - 1, x, steps - 1);
+        }
+      }
+      if (onBoard (pasture, y, x + 1)) {
+        if (pasture[y][x + 1] != '*') {
+          ans += help (f, pasture, y, x + 1, steps - 1);
+        }
+      }
+      if (onBoard (pasture, y, x - 1)) {
+        if (pasture[y + 1][x] != '*') {
+          ans += help (f, pasture, y, x - 1, steps - 1);
+        }
+      }
+      return ans;
+    }
+  }
+
+  private static boolean onBoard (char[][] board, int y, int x) {
+    return (y < board.length && y > 0 && x < board[y].length && x > 0);
   }
 
   private static String toString (int [] s) {
