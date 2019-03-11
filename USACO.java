@@ -157,21 +157,31 @@ public class USACO {
     return field[start[0]] [start[1]];
   }
 
+  private static int[][] copy (int [][] ma) {
+    int [][] ans = new int[ma.length][ma[0].length];
+    for (int y = 0; y < ma.length; y++) {
+      for (int x = 0; x < ma[0].length; x ++) {
+        ans[y][x] = ma[y][x];
+      }
+    }
+    return ans;
+  }
+
   private static int[][] update (int [][] a) {
-    int[][] og = a;
+    int[][] og = copy (a);
     for (int r = 0; r < a.length; r ++) {
       for (int c = 0; c < a[r].length; c ++) {
-        if (og [r][c] != 0 && og [r][c] != 1) {
-          if (onBoard (a, r + 1, c) && og [r-1][c] != -1) {
+        if (og [r][c] != 0 && og [r][c] != -1) {
+          if (onBoard (a, r + 1, c) && og [r+1][c] != -1) {
             a[r + 1][c] += og [r][c];
           }
           if (onBoard (a, r - 1, c) && og [r-1][c] != -1) {
             a[r - 1][c] += og [r][c];
           }
-          if (onBoard (a, r, c + 1) && og [r-1][c] != -1) {
+          if (onBoard (a, r, c + 1) && og [r][c + 1] != -1) {
             a[r][c + 1] += og [r][c];
           }
-          if (onBoard (a, r, c - 1) && og [r-1][c] != -1) {
+          if (onBoard (a, r, c - 1) && og [r][c -1] != -1) {
             a[r][c - 1] += og [r][c];
           }
           a[r][c] = 0;
