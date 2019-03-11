@@ -184,7 +184,8 @@ public class USACO {
           if (onBoard (a, r, c - 1) && og [r][c - 1] != -1) {
             a[r][c - 1] += og [r][c]; //left
           }
-          a[r][c] = 0;
+          a[r][c] = 0; //to mark you were there
+
         }
 
       }
