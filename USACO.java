@@ -106,8 +106,8 @@ public class USACO {
     return sizes;
   }
 
-  private static char [][] field (String filename) throws FileNotFoundException {
-    char [][] pasture = new char [nmt (filename)[0]] [nmt (filename)[1]];
+  private static int [][] field (String filename) throws FileNotFoundException {
+    int [][] pasture = new int [nmt (filename)[0]] [nmt (filename)[1]];
     ArrayList <String> lines = readFile (filename);
     ArrayList <String> field = new ArrayList <String> ();
     for (int i = 1; i <= nmt (filename)[0]; i ++) {
@@ -117,9 +117,14 @@ public class USACO {
     int index = 0; //keeps track of index of pasture
     for (int i = 0; i < field.size (); i ++) {
       String line = field.get (i);
-      char[] row = new char [line.length()];
+      int [] row = new int [line.length()];
       for (int x = 0; x < line.length (); x ++) {
-        row[x] = line.charAt (x);
+        if (line.charAt (x) == '.') {
+          row[x] = 0;
+        }
+        else {
+          row[x] = -1;
+        }
       }
       pasture[index] = row; //add this row to pasture
       index ++;
@@ -139,45 +144,45 @@ public class USACO {
     return coordinates;
   }
 
-  private static int solve (String filename ) throws FileNotFoundException {
-    char [][] field = field (filename);
+  private static int solve (String filename) throws FileNotFoundException {
+    int [][] field = field (filename);
     int [] start = cowsCors (filename)[0];
+    int [] end = cowsCors (filename) [1];
+    field [end [0] - 1] [end [1] - 1] = 1;
     int steps = nmt (filename)[2];
-    return help (filename, field, start[0], start[1], steps);
+    while (steps > 0) {
+      field = update (field);
+      steps --;
+    }
+    return field[start[0]] [start[1]];
   }
 
-  private static int help (String f, char [][] pasture, int y, int x, int steps) throws FileNotFoundException{
-    int [] end = cowsCors (f) [1];
-    int ans = 0;
-    if (steps == 0 && y == end[0] && x == end [1]) {
-      return 1;
+  private static int[][] update (int [][] a) {
+    int[][] og = a;
+    for (int r = 0; r < a.length; r ++) {
+      for (int c = 0; c < a[r].length; c ++) {
+        if (og [r][c] != 0 && og [r][c] != 1) {
+          if (onBoard (a, r + 1, c) && og [r-1][c] != -1) {
+            a[r + 1][c] += og [r][c];
+          }
+          if (onBoard (a, r - 1, c) && og [r-1][c] != -1) {
+            a[r - 1][c] += og [r][c];
+          }
+          if (onBoard (a, r, c + 1) && og [r-1][c] != -1) {
+            a[r][c + 1] += og [r][c];
+          }
+          if (onBoard (a, r, c - 1) && og [r-1][c] != -1) {
+            a[r][c - 1] += og [r][c];
+          }
+          a[r][c] = 0;
+        }
+      }
     }
-    else {
-      if (onBoard (pasture, y + 1, x)) {
-        if (pasture[y + 1][x] != '*') {
-          ans += help (f, pasture, y + 1, x, steps - 1);
-        }
-      }
-      if (onBoard (pasture, y - 1, x)) {
-        if (pasture[y - 1][x] != '*') {
-          ans += help (f, pasture, y - 1, x, steps - 1);
-        }
-      }
-      if (onBoard (pasture, y, x + 1)) {
-        if (pasture[y][x + 1] != '*') {
-          ans += help (f, pasture, y, x + 1, steps - 1);
-        }
-      }
-      if (onBoard (pasture, y, x - 1)) {
-        if (pasture[y + 1][x] != '*') {
-          ans += help (f, pasture, y, x - 1, steps - 1);
-        }
-      }
-      return ans;
-    }
+    return a;
   }
 
-  private static boolean onBoard (char[][] board, int y, int x) {
+
+  private static boolean onBoard (int[][] board, int y, int x) {
     return (y < board.length && y > 0 && x < board[y].length && x > 0);
   }
 
@@ -229,3 +234,52 @@ public class USACO {
     }
   }
 }
+
+/*
+if (onBoard (pasture, y + 1, x)) {
+  if (pasture[y + 1][x] == '.') {
+    pasture[y + 1] [x] = ' ';
+    ans += help (f, pasture, y + 1, x, steps - 1);
+  }
+}
+if (onBoard (pasture, y - 1, x)) {
+  if (pasture[y - 1][x] == '.') {
+    pasture[y - 1] [x] = ' ';
+    ans += help (f, pasture, y - 1, x, steps - 1);
+  }
+}
+if (onBoard (pasture, y, x + 1)) {
+  if (pasture[y][x + 1] == '.') {
+    pasture[y] [x + 1] = ' ';
+    ans += help (f, pasture, y, x + 1, steps - 1);
+  }
+}
+if (onBoard (pasture, y, x - 1)) {
+  if (pasture[y ][x -1] == '.') {
+    pasture[y] [x - 1 ] = ' ';
+    ans += help (f, pasture, y, x - 1, steps - 1);
+  }
+}
+pasture [y][x] = 'x';
+
+if (onBoard (pasture, y + 1, x)) {
+  if (pasture[y + 1][x] == ' ') {
+    ans += help (f, pasture, y + 1, x, steps - 1);
+  }
+}
+if (onBoard (pasture, y - 1, x)) {
+  if (pasture[y - 1][x] == ' ') {
+    ans += help (f, pasture, y - 1, x, steps - 1);
+  }
+}
+if (onBoard (pasture, y, x + 1)) {
+  if (pasture[y][x + 1] == ' ') {
+    ans += help (f, pasture, y, x + 1, steps - 1);
+  }
+}
+if (onBoard (pasture, y, x - 1)) {
+  if (pasture[y ][x -1] == ' ') {
+    ans += help (f, pasture, y, x - 1, steps - 1);
+  }
+}
+*/
